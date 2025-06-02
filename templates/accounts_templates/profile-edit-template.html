@@ -1,0 +1,68 @@
+{% extends 'common_templates/base.html' %}
+{% load static %}
+
+{% block content %}
+       <div class="login-background" style="background-image: url('{% static 'images/fruits.jpg' %}');">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card-profile-edit">
+                    <form method="post" id="comment-form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="text-center">
+                                {% if user.profile.profile_picture %}
+                                    <img src="{{ user.profile.profile_picture.url }}" alt="profile_pic"
+                                         class="profile-image-pic img-thumbnail rounded-circle">
+                                {% else %}
+                                    <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png"
+                                         class="profile-image-pic img-thumbnail rounded-circle" alt="default profile">
+                                {% endif %}
+
+                                <!-- Hidden file input -->
+                                <input type="file" id="profile-picture-upload" name="profile_picture" class="d-none">
+
+                                <button class="btn btn-success mt-2" type="button" id="change-photo-btn">
+                                    <i class="fa fa-fw fa-camera"></i> Change Photo
+                                </button>
+                            </div>
+
+                            <ul class="nav nav-tabs mt-3">
+                                <li class="nav-item"><a href="#" class="active nav-link">Settings</a></li>
+                            </ul>
+
+                            <div class="tab-content pt-3">
+                                <div class="tab-pane active">
+                                    <div class="form-group">
+                                        {{ form.first_name.label_tag }}
+                                        {{ form.first_name }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form.last_name.label_tag }}
+                                        {{ form.last_name }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form.country.label_tag }}
+                                        {{ form.country }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form.date_of_birth.label_tag }}
+                                        {{ form.date_of_birth }}
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="text-right">
+                                <button class="btn btn-success" type="submit">Save Changes</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script src="{% static 'js/profile.js' %}"></script>    
+   
+{% endblock %}
+

@@ -1,0 +1,86 @@
+{% extends 'common_templates/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        {% for news in news_items %}
+                            <div class="col-lg-3 col-md-6 col-sm-12">
+                                <article class="post-grid mb-5">
+                                    {% if news.image %}
+                                        <a class="post-thumb mb-4 d-block">
+                                            <img src="{{ news.image.url }}" alt="news img" class="img-fluid w-100">
+                                        </a>
+                                    {% endif %}
+
+                                    <h3 class="post-title mt-1">
+                                        <a>{{ news.title }}</a>
+                                    </h3>
+
+                                    <h4 class="post-title mt-1">
+                                        <a>{{ news.content|linebreaks }}</a>
+                                    </h4>
+
+                                    <span class="text-muted letter-spacing text-uppercase font-sm">
+                                    {{ news.created_at|date:"F j, Y" }}
+                                </span>
+                                </article>
+                            </div>
+
+                        {% empty %}
+                            <p>No news has been posted yet.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="m-auto">
+                    <div class="pagination mt-5 pt-4">
+                        <ul class="list-inline">
+                            {% if page_obj.has_previous %}
+                                <li class="list-inline-item">
+                                    <a href="?page={{ page_obj.previous_page_number }}">Prev</a>
+                                </li>
+                            {% endif %}
+
+                            {% for num in paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                    <li class="list-inline-item"><a href="?page={{ num }}" class="active">{{ num }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="list-inline-item"><a href="?page={{ num }}">{{ num }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <li class="list-inline-item">
+                                    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="copyright text-center ">
+                @ copyright all reserved to <a href="https://themefisher.com/">themefisher.com</a>-2019 Distribution <a
+                    href="https://themewagon.com">ThemeWagon.</a></p>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+

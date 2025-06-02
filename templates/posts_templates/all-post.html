@@ -1,0 +1,105 @@
+{% extends 'common_templates/base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Search overlay start -->
+    <div class="search-wrap">
+        <div class="overlay">
+            <form action="#" class="search-form">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 col-9">
+                            <input type="text" class="form-control" placeholder="Search..."/>
+                        </div>
+                        <div class="col-md-2 col-3 text-right">
+                            <div class="search_toggle toggle-wrap d-inline-block">
+                                <i class="ti-close"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Search overlay end -->
+
+    <section>
+        <div class="login-background" style="background-image: url('{% static 'images/balloons pic.jpg' %}');">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="post-container">
+                        {% for post in page_obj %}
+                            <div class="post-item">
+                                <div class="post-header mb-4">
+                                    <!-- Post Title Links to Post Details -->
+                                    <h2 class="post-title mt-2">
+                                        <a href="{% url 'details-post' post.pk %}">{{ post.title }}</a>
+                                    </h2>
+                                    <p>{{ post.content|truncatewords:20 }}</p>
+                                    <div class="post-meta">
+                                        <span class="text-uppercase font-sm letter-spacing-1 mr-3">
+                                            {{ post.user.profile.get_full_name }}
+                                        </span>
+                                        <span class="text-uppercase font-sm letter-spacing-1">
+                                            {{ post.created_at }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="post-body">
+                                    <div class="tags-share-box center-box d-flex text-center justify-content-between border-top border-bottom py-3">
+                                        <span class="single-comment-o">
+                                            <i class="fa fa-comment-o"></i> {{ post.comments.count }} Comments
+                                        </span>
+
+                                        <div class="post-share">
+                                            
+                                            <span class="count-number-like">{{ post.like_set.count }}</span>
+                                            
+                                            <a href="{% url 'like' post.pk %}" class="penci-post-like single-like-button">
+                                                <i class="ti-heart"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <!-- "Read More" Button -->
+                                    <div class="text-center mt-3">
+                                        
+                                        <a href="{% url 'details-post' post.pk %}" class="btn btn-success">
+                                            Read More
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <h1 class="no-posts text-center">No Posts Available</h1>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Pagination Controls -->
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if page_obj.has_previous %}
+                                <a href="?page=1">&laquo; first</a>
+                                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                            {% endif %}
+
+                            <span class="current">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </span>
+
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{% static 'js/comments.js' %}"></script>
+{% endblock %}
+
+
