@@ -8,6 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RiseAboveSilence/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/RiseAboveSilence/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/data_model.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/models.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +66,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Documents\Rise-Above-Silence\docs" />
       <recent name="D:\Documents\Rise-Above-Silence\RiseAboveSilence" />
     </key>
   </component>
@@ -235,7 +239,8 @@
       <workItem from="1750020487052" duration="927000" />
       <workItem from="1750344209127" duration="7751000" />
       <workItem from="1751229753109" duration="5580000" />
-      <workItem from="1751790456600" duration="6707000" />
+      <workItem from="1751790456600" duration="14444000" />
+      <workItem from="1751906491023" duration="3826000" />
     </task>
     <servers />
   </component>
