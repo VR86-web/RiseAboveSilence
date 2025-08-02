@@ -1,0 +1,19 @@
+.user-greeting-bar {
+    border-top: none;      /* Remove top border */
+    border-bottom: none;   /* Remove bottom border */
+    background-color: transparent; /* Make background transparent */
+}
+
+.user-greeting {
+    font-size: 0.9rem;            /* Slightly smaller */
+    font-weight: 400;              /* Normal weight for readability */
+    font-style: italic;            /* Add a subtle italic touch */
+    color: #777777;                /* A soft medium gray */
+    letter-spacing: 0.05em;        /* Slight spacing for neatness */
+    user-select: none;
+    margin-right: 0;
+    padding-right: 0.25rem;
+    white-space: nowrap;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Clean modern font */
+}
+

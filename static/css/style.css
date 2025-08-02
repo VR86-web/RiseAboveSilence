@@ -574,25 +574,18 @@ overlay search
 }
 
 /* Container for all posts_templates */
-.post-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;  /* Space between posts_templates */
-    justify-content: flex-start; /* Align items to the start of the container */
+
+
+.post-item {
+    flex: 1 1 300px;
+    max-width: 100%;
+    background: #ffffff69;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Individual post styling */
-.post-item {
-    width: 100%; /* Full width on mobile */
-    max-width: 1200px !important; /* Increase the maximum width of each post */
-    padding: 30px; /* Add more padding for spaciousness */
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    word-wrap: break-word; /* Ensures text wraps inside the container */
-}
+
 
 /* Hover effect on posts_templates */
 .post-item:hover {
@@ -620,17 +613,20 @@ overlay search
     color: #888;
 }
 
-/* Responsive design - Layout adjusts on different screen sizes */
 @media (min-width: 768px) {
     .post-item {
-        width: 48%; /* Two posts_templates per row on tablets and larger screens */
+        max-width: 48%;
     }
 }
 
 @media (min-width: 1024px) {
     .post-item {
-        width: 30%; /* Three posts_templates per row on desktops */
+        max-width: 30%;
     }
+}
+.post-container:only-child .post-item,
+.post-container .post-item:only-child {
+    max-width: 600px;
 }
 
 
@@ -1206,24 +1202,17 @@ overlay search
 
 
 .post-container {
-    width: 140%;  /* Full width */
-    max-width: 140%; /* No max-width restriction */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* center children horizontally */
+    gap: 20px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 40px;
-    background: transparent;
-    border-radius: 10px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
 
-.post-container {
-    width: 129%;  /* Full width */
-    max-width: 109%; /* No max-width restriction */
-    margin: 0 auto;
-    padding: 40px;
-    background: transparent;
-    border-radius: 10px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-}
+
+
 
 
 .comment-area {
@@ -2032,7 +2021,7 @@ footer
 
 
 body{
-	 background-color: #fff;
+	 background-color: #f8efea;
 	font-family: 'Poppins', sans-serif;
 }
 .card{
@@ -2115,3 +2104,53 @@ a{
   text-decoration: none;
 }
 /*# sourceMappingURL=style.css.map */
+
+/* ===== Improved Navbar Menu Styling ===== */
+
+.navbar-nav .nav-item {
+    margin: 0 10px;
+}
+
+.navbar-nav .nav-link {
+    padding: 12px 16px;
+    font-weight: 500;
+    color: #333;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+    background-color: #f1f1f1;
+    color: #007bff;
+}
+
+.navbar-nav .nav-item.active .nav-link {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.navbar-toggler {
+    border: none;
+    font-size: 1.2rem;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+#notif-badge {
+    font-size: 0.7rem;
+    padding: 3px 6px;
+    border-radius: 50%;
+}
+
+.small-profile-pic {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: 15px;
+}
+
