@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model, login
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-
 from RiseAboveSilence.accounts.forms import CustomUserCreationForm
 
 UserModel = get_user_model()
@@ -24,5 +23,6 @@ class CustomUserRegisterView(CreateView):
         login(self.request, self.object)
 
         return response
+
 
 

@@ -7,9 +7,6 @@ from RiseAboveSilence.posts.forms import PostCreateForm, PostUpdateForm, PostDel
 from RiseAboveSilence.posts.models import Post
 
 
-# Create your views here.
-
-
 class AddPostView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostCreateForm
@@ -35,6 +32,9 @@ class AllPostView(ListView):
         context = super().get_context_data(**kwargs)
         context["form"] = CommentForm()
         return context
+
+    def get_queryset(self):
+        return Post.objects.filter(is_approved=True).order_by('-created_at')
 
 
 class DetailPostView(LoginRequiredMixin, DetailView):

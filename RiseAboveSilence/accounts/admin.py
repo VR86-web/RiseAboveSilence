@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from django.contrib.auth.admin import UserAdmin
+from unfold.admin import ModelAdmin
 
 from RiseAboveSilence.accounts.forms import CustomUserCreationForm, CustomUserChangeForm
 
@@ -11,7 +11,7 @@ UserModel = get_user_model()
 
 
 @admin.register(UserModel)
-class AppUserAdmin(UserAdmin):
+class AppUserAdmin(ModelAdmin):
     model = UserModel
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm

@@ -1,7 +1,17 @@
+import datetime
+import logging
 
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.timezone import now
+
+from django.views.decorators.http import require_GET
 from django.views.generic import ListView, TemplateView
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from RiseAboveSilence.common.forms import CommentForm
 from RiseAboveSilence.common.models import News, Comment, Like
@@ -36,6 +46,57 @@ def comment_view(request, pk):
     return render(request, 'posts_templates/all-post.html', {'post': post, 'form': form})
 
 
+logger = logging.getLogger(__name__)
+
+
+@require_GET
+@login_required
+def async_new_comments(request):
+    user = request.user
+    since_str = request.GET.get('since')
+
+    try:
+        since = datetime.datetime.fromisoformat(since_str)
+        if since.tzinfo is None:
+            since = since.replace(tzinfo=datetime.timezone.utc)
+    except (TypeError, ValueError):
+        logger.warning("Invalid 'since' parameter: %s", since_str)
+        since = now() - datetime.timedelta(minutes=5)
+
+    post_comments = Comment.objects.filter(
+        to_post__user=user,
+        created_at__gt=since,
+        parent__isnull=True
+    ).exclude(user=user).select_related('user', 'to_post')
+
+    reply_comments = Comment.objects.filter(
+        parent__user=user,
+        created_at__gt=since
+    ).exclude(user=user).select_related('user', 'to_post', 'parent')
+
+    comments = sorted(
+        list(post_comments) + list(reply_comments),
+        key=lambda c: c.created_at,
+        reverse=True
+    )
+
+    data = []
+    for comment in comments:
+        data.append({
+            "id": comment.id,
+            "type": "reply" if comment.parent else "post_comment",
+            "content": comment.content[:80],
+            "author": comment.user.username,
+            "post_id": comment.to_post.id,
+            "post_title": comment.to_post.title[:80],
+        })
+
+    return JsonResponse({
+        "new_count": len(data),
+        "notifications": data,
+    })
+
+
 @login_required
 def reply_to_comment(request, pk, comment_id):
     post = get_object_or_404(Post, pk=pk)
@@ -56,18 +117,21 @@ def reply_to_comment(request, pk, comment_id):
     return redirect('details-post', pk=post.pk)
 
 
-@login_required
-def likes_functionality(request, pk: int):
-    liked_object = Like.objects.filter(
-        to_post_id=pk,
-        user=request.user
-    ).first()
+class ToggleLikeAPIView(APIView):
+    permission_classes = [IsAuthenticated]
 
-    if liked_object:
-        liked_object.delete()
-    else:
-        like = Like(to_post_id=pk, user=request.user)
-        like.save()
+    def post(self, request, pk):
+        post = Post.objects.get(pk=pk)
+        user = request.user
 
-    return redirect(request.META.get('HTTP_REFERER') + f'#{pk}')
+        like, created = Like.objects.get_or_create(user=user, to_post=post)
+
+        if not created:
+            like.delete()
+            liked = False
+        else:
+            liked = True
+
+        like_count = Like.objects.filter(to_post=post).count()
+        return Response({'liked': liked, 'like_count': like_count}, status=status.HTTP_200_OK)
 

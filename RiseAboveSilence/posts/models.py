@@ -21,5 +21,14 @@ class Post(models.Model):
         auto_now_add=True,
     )
 
+    is_approved = models.BooleanField(
+        default=False,
+    )
+
+    class Meta:
+        permissions = [
+            ("can_approve_post", "Can approve posts"),
+        ]
+
     def __str__(self):
         return self.title

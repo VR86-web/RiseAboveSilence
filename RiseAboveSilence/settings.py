@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 
 import cloudinary
+from django.templatetags.static import static
 from django.urls import reverse_lazy
 from dotenv import load_dotenv
 from decouple import config
@@ -42,7 +43,9 @@ MY_APPS = [
 ]
 
 INSTALLED_APPS = [
+    'unfold',
     'django.contrib.admin',
+    'unfold.contrib.forms',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -52,7 +55,32 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django_countries',
     "django_extensions",
+    'rest_framework',
 ] + MY_APPS
+
+UNFOLD = {
+    "SITE_TITLE": "My Admin",
+    "SITE_HEADER": "My Admin Panel",
+    "SITE_URL": "/",
+    "SHOW_COUNTS": True,
+    "COLLAPSIBLE_NAV": True,
+    "SITE_ICON": {
+        "dark": lambda request: static("icon-dark.svg"),  # dark mode
+    },
+    "SITE_LOGO": {
+        "dark": lambda request: static("logo-dark.svg"),  # dark mode
+    },
+
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -142,6 +170,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = (
     BASE_DIR / 'static',
 )
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': config("CLOUDINARY_NAME"),

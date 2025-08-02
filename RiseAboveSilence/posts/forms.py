@@ -7,7 +7,7 @@ from RiseAboveSilence.posts.models import Post
 class PostsBaseForm(forms.ModelForm):
     class Meta:
         model = Post
-        exclude = ('user',)
+        exclude = ('is_approved', 'user',)
         widgets = {
             'title': forms.TextInput(attrs={
                 'placeholder': 'Enter post title',

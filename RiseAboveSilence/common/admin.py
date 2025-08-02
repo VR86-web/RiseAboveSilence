@@ -1,4 +1,5 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 
 from RiseAboveSilence.common.models import Comment, News
 
@@ -7,7 +8,7 @@ from RiseAboveSilence.common.models import Comment, News
 
 
 @admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
+class CommentAdmin(ModelAdmin):
     list_display = ('user', 'to_post_title', 'content', 'created_at', 'parent')
 
     def to_post_title(self, obj):
@@ -16,5 +17,5 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 @admin.register(News)
-class NewsAdmin(admin.ModelAdmin):
+class NewsAdmin(ModelAdmin):
     list_display = ('title', 'created_at')
