@@ -2,183 +2,172 @@
 {% load static %}
 
 {% block content %}
-    <!-- Search overlay start -->
-    <div class="search-wrap">
-        <div class="overlay">
-            <form action="#" class="search-form">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-10 col-9">
-                            <input type="text" class="form-control" placeholder="Search..."/>
-                        </div>
-                        <div class="col-md-2 col-3 text-right">
-                            <div class="search_toggle toggle-wrap d-inline-block">
-                                <i class="ti-close"></i>
-                            </div>
+<!-- Search overlay start -->
+<div class="search-wrap">
+    <div class="overlay">
+        <form action="#" class="search-form">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-10 col-9">
+                        <input type="text" class="form-control" placeholder="Search..."/>
+                    </div>
+                    <div class="col-md-2 col-3 text-right">
+                        <div class="search_toggle toggle-wrap d-inline-block">
+                            <i class="ti-close"></i>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
-    <!-- Search overlay end -->
+</div>
+<!-- Search overlay end -->
 
-    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 
-
-    <div class="login-background-scroll" style="background-image: url('{% static 'images/balloons pic.jpg' %}');">
-        <div class="col-sm-8 comment-form-scroll">
-            <div class="panel panel-white post panel-shadow">
-                <div class="post-heading">
-                    <div class="pull-left image">
-                        {% if post.user.profile.profile_picture %}
-                            <img src="{{ post.user.profile.profile_picture.url }}" alt="profile_pic"
-                                 class="avatar"/>
-                        {% else %}
-                            <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png"
-                                 class="avatar"
-                                 alt="avatar">
-                        {% endif %}
+<div class="login-background-scroll" style="background-image: url('{% static 'images/balloons pic.jpg' %}');">
+    <div class="col-sm-8 comment-form-scroll">
+        <div class="panel panel-white post panel-shadow">
+            <div class="post-heading">
+                <div class="pull-left image">
+                    {% if post.user.profile.profile_picture %}
+                        <img src="{{ post.user.profile.profile_picture.url }}" alt="profile_pic" class="avatar"/>
+                    {% else %}
+                        <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png" class="avatar" alt="avatar">
+                    {% endif %}
+                </div>
+                <div class="pull-left meta">
+                    <div class="title h5">
+                        <a href="{% url 'profile-details' post.user.pk %}">
+                            <b>{{ post.user.profile.get_full_name }}</b>
+                        </a>
+                        made a post.
                     </div>
-                    <div class="pull-left meta">
-                        <div class="title h5">
-                            <a href="{% url 'profile-details' post.user.pk %}">
-                                <b>{{ post.user.profile.get_full_name }}</b>
+                    <h6 class="text-muted time">{{ post.created_at }}</h6>
+                </div>
+            </div>
+            <div class="post-description">
+                <h2 class="post-title mt-2">{{ post.title }}</h2>
+                <p>{{ post.content }}</p>
+                <div class="stats">
+                    <div class="tags-share-box d-flex justify-content-between border-top border-bottom py-3">
+                        <span class="single-comment-o">
+                            <i class="fa fa-comment-o"></i> {{ comments|length }} Comments
+                        </span>
+
+                        {% if is_creator %}
+                            <a href="{% url 'delete-post' post.pk %}" class="single-comment-o">
+                                <i class="fa fa-trash"></i> Delete Post
                             </a>
-                            made a post.
-                        </div>
-                        <h6 class="text-muted time">{{ post.created_at }}</h6>
-                    </div>
-                </div>
-                <div class="post-description">
-                    <h2 class="post-title mt-2">{{ post.title }}</h2>
-                    <p>{{ post.content }}</p>
-                    <div class="stats">
-                        <div class="tags-share-box d-flex justify-content-between border-top border-bottom py-3">
-                            <span class="single-comment-o">
-                                <i class="fa fa-comment-o"></i> {{ comments|length }} Comments
-                            </span>
+                            <a href="{% url 'update-post' post.pk %}" class="single-comment-o">
+                                <i class="fa fa-edit"></i> Update Post
+                            </a>
+                        {% endif %}
 
-                            {% if is_creator %}
-                                <a href="{% url 'delete-post' post.pk %}" class="single-comment-o">
-                                    <i class="fa fa-trash"></i> Delete Post
-                                </a>
-                                <a href="{% url 'update-post' post.pk %}" class="single-comment-o">
-                                    <i class="fa fa-edit"></i> Update Post
-                                </a>
-                            {% endif %}
-
-                            <div class="post-share">
-                                <span class="count-number-like">{{ post.like_set.count }}</span>
-                                
-                                <a href="{% url 'like' post.pk %}" class="penci-post-like single-like-button">
-                                    <i class="ti-heart"></i>
-                                </a>
-                            </div>
+                        <div class="post-share">
+                            <span id="like-count-{{ post.id }}">{{ post.like_set.count }}</span>
+                            <button
+                                class="like-button"
+                                data-post-id="{{ post.id }}"
+                                style="background: none; border: none; cursor: pointer;"
+                                type="button"
+                            >
+                                <i class="ti-heart"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div class="post-footer">
-                    <form method="POST" action="{% url 'comment' post.pk %}" class="mt-4">
-                        {% csrf_token %}
-                        <div class="input-group">
-                            <input name="content" class="form-control" placeholder="Add a comment..." type="text"
-                                   required>
-                            <span class="input-group-addon">
-                                <button type="submit" class="btn btn-success">
-                                    <i class="fa fa-edit"></i> Post
-                                </button>
-                            </span>
-                        </div>
-                    </form>
-                    <a href="#" class="show-comments-btn" data-post-id="{{ post.pk }}">
-                        Show Comments ({{ comments|length }})
-                    </a>
-                    <div id="comments-{{ post.pk }}" class="comment-area my-5 comment-form-scroll"
-                         style="display: none;">
-                        <h3 class="mb-4 text-center">Comments ({{ comments|length }})</h3>
+            </div>
+            <div class="post-footer">
+                <form method="POST" action="{% url 'comment' post.pk %}" class="mt-4">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input name="content" class="form-control" placeholder="Add a comment..." type="text" required>
+                        <span class="input-group-addon">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-edit"></i> Post
+                            </button>
+                        </span>
+                    </div>
+                </form>
+                <a href="#" class="show-comments-btn" data-post-id="{{ post.pk }}">
+                    Show Comments ({{ comments|length }})
+                </a>
+                <div id="comments-{{ post.pk }}" class="comment-area my-5 comment-form-scroll" style="display: none;">
+                    <h3 class="mb-4 text-center">Comments ({{ comments|length }})</h3>
 
-                        <ul class="comments-list">
-                            {% for comment in comments %}
-                                <li class="comment">
-                                    <a class="pull-left" href="{% url 'profile-details' comment.user.pk %}">
-                                        {% if comment.user.profile_picture %}
-                                            <img src="{{ comment.user.profile_picture.url }}" alt="profile_pic"
-                                                 class="avatar"/>
-                                        {% else %}
-                                            <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png"
-                                                 class="avatar"
-                                                 alt="avatar">
-                                        {% endif %}
-                                    </a>
-                                    <div class="comment-body">
-                                        <div class="comment-heading">
-                                            <a class="user"
-                                               href="{% url 'profile-details' comment.user.pk %}">{{ comment.user.profile.get_full_name }}</a>
-                                            <h5 class="time">{{ comment.created_at }}</h5>
-                                        </div>
-                                        <p>{{ comment.content }}</p>
-
-                                        <!-- Reply Button -->
-                                        <button class="reply-btn btn btn-sm btn btn-success"
-                                                data-comment-id="{{ comment.pk }}">
-                                            Reply
-                                        </button>
-
-                                        <!-- Reply Form -->
-                                        <form action="{% url 'reply' pk=post.pk comment_id=comment.pk %}" method="post"
-                                              class="reply-form mt-2" id="reply-form-{{ comment.pk }}"
-                                              style="display: none;">
-                                            {% csrf_token %}
-                                            <div class="replied-to-message">
-                                                <strong>Replied to:</strong> {{ comment.user.profile.get_full_name }}
-                                            </div>
-                                            <textarea name="content" class="form-control"
-                                                      placeholder="Write a reply..." required></textarea>
-                                            <button type="submit" class="btn btn-success">
-                                                <i class="fa fa-edit"></i> Submit reply
-                                            </button>
-                                        </form>
+                    <ul class="comments-list">
+                        {% for comment in comments %}
+                            <li class="comment" id="comment-{{ comment.pk }}">
+                                <a class="pull-left" href="{% url 'profile-details' comment.user.pk %}">
+                                    {% if comment.user.profile_picture %}
+                                        <img src="{{ comment.user.profile_picture.url }}" alt="profile_pic" class="avatar"/>
+                                    {% else %}
+                                        <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png" class="avatar" alt="avatar">
+                                    {% endif %}
+                                </a>
+                                <div class="comment-body">
+                                    <div class="comment-heading">
+                                        <a class="user" href="{% url 'profile-details' comment.user.pk %}">{{ comment.user.profile.get_full_name }}</a>
+                                        <h5 class="time">{{ comment.created_at }}</h5>
                                     </div>
+                                    <p>{{ comment.content }}</p>
 
-                                    <!-- Nested Replies -->
-                                    <ul class="comments-list">
-                                        {% for reply in comment.replies.all %}
-                                            <li class="comment">
-                                                <a class="pull-left" href="{% url 'profile-details' reply.user.pk %}">
-                                                    {% if reply.user.profile.profile_picture %}
-                                            <img src="{{ reply.user.profile.profile_picture.url }}" alt="profile_pic"
-                                                 class="avatar"/>
-                                        {% else %}
-                                            <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png"
-                                                 class="avatar"
-                                                 alt="avatar">
-                                        {% endif %}
-                                                </a>
-                                                <div class="comment-body">
-                                                    <div class="comment-heading">
-                                                        <a class="user"
-                                                           href="{% url 'profile-details' reply.user.pk %}">{{ reply.user.profile.get_full_name }}</a>
-                                                        <h5 class="time">{{ reply.created_at }}</h5>
-                                                    </div>
-                                                    <p>{{ reply.content }}</p>
+                                    <!-- Reply Button -->
+                                    <button class="reply-btn btn btn-sm btn btn-success" data-comment-id="{{ comment.pk }}">
+                                        Reply
+                                    </button>
+
+                                    <!-- Reply Form -->
+                                    <form action="{% url 'reply' pk=post.pk comment_id=comment.pk %}" method="post"
+                                          class="reply-form mt-2" id="reply-form-{{ comment.pk }}" style="display: none;">
+                                        {% csrf_token %}
+                                        <div class="replied-to-message">
+                                            <strong>Replied to:</strong> {{ comment.user.profile.get_full_name }}
+                                        </div>
+                                        <textarea name="content" class="form-control" placeholder="Write a reply..." required></textarea>
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="fa fa-edit"></i> Submit reply
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <!-- Nested Replies -->
+                                <ul class="comments-list">
+                                    {% for reply in comment.replies.all %}
+                                        <li class="comment" id="comment-{{ reply.pk }}">
+                                            <a class="pull-left" href="{% url 'profile-details' reply.user.pk %}">
+                                                {% if reply.user.profile.profile_picture %}
+                                                    <img src="{{ reply.user.profile.profile_picture.url }}" alt="profile_pic" class="avatar"/>
+                                                {% else %}
+                                                    <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png" class="avatar" alt="avatar">
+                                                {% endif %}
+                                            </a>
+                                            <div class="comment-body">
+                                                <div class="comment-heading">
+                                                    <a class="user" href="{% url 'profile-details' reply.user.pk %}">{{ reply.user.profile.get_full_name }}</a>
+                                                    <h5 class="time">{{ reply.created_at }}</h5>
                                                 </div>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                            {% empty %}
-                                <p class="no-comments text-center">No comments yet.</p>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                                                <p>{{ reply.content }}</p>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% empty %}
+                            <p class="no-comments text-center">No comments yet.</p>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="{% static 'js/comments.js' %}"></script>
+<script src="{% static 'js/like.js' %}"></script>
+<script src="{% static 'js/comments.js' %}"></script>
 {% endblock %}
+
 
 
 

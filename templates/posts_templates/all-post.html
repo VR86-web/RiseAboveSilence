@@ -53,18 +53,20 @@
                                         </span>
 
                                         <div class="post-share">
-                                            
-                                            <span class="count-number-like">{{ post.like_set.count }}</span>
-                                            
-                                            <a href="{% url 'like' post.pk %}" class="penci-post-like single-like-button">
+                                            <span id="like-count-{{ post.id }}">{{ post.like_set.count }}</span>
+                                            <button
+                                                    class="like-button"
+                                                    data-post-id="{{ post.id }}"
+                                                    style="background: none; border: none; cursor: pointer;"
+                                            >
                                                 <i class="ti-heart"></i>
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
 
                                     <!-- "Read More" Button -->
                                     <div class="text-center mt-3">
-                                        
+
                                         <a href="{% url 'details-post' post.pk %}" class="btn btn-success">
                                             Read More
                                         </a>
@@ -100,6 +102,8 @@
     </section>
 
     <script src="{% static 'js/comments.js' %}"></script>
+    <script src="{% static 'js/like.js' %}"></script>
+
 {% endblock %}
 
 
