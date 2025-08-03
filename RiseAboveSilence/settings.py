@@ -27,11 +27,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
-DEBUG = config('DEBUG', default=False, cast=bool)
-GOOGLE_MAPS_API_KEY = config('GOOGLE_MAPS_API_KEY')
+SECRET_KEY = os.getenv("SECRET_KEY", config("SECRET_KEY"))
+DEBUG = os.getenv('DEBUG', config('DEBUG')) == 'True'
+GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY',config('GOOGLE_MAPS_API_KEY'))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', config('ALLOWED_HOSTS')). split(',')
+
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', config('CSRF_TRUSTED_ORIGINS', [])). split(',')
 
 
 # Application definition
@@ -65,10 +67,10 @@ UNFOLD = {
     "SHOW_COUNTS": True,
     "COLLAPSIBLE_NAV": True,
     "SITE_ICON": {
-        "dark": lambda request: static("icon-dark.svg"),  # dark mode
+        "dark": lambda request: static("icon-dark.svg"),
     },
     "SITE_LOGO": {
-        "dark": lambda request: static("logo-dark.svg"),  # dark mode
+        "dark": lambda request: static("logo-dark.svg"),
     },
 
 }
@@ -122,11 +124,11 @@ WSGI_APPLICATION = 'RiseAboveSilence.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='5432'),
+        'NAME': os.getenv('DB_NAME',config('DB_NAME')),
+        'USER': os.getenv('DB_USER',config('DB_USER')),
+        'PASSWORD': os.getenv('DB_PASSWORD',config('DB_PASSWORD')),
+        'HOST': os.getenv('DB_HOST',config('DB_HOST')),
+        'PORT': os.getenv('DB_PORT',config('DB_PORT')),
     }
 }
 
