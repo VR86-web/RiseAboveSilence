@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="846bf98e-537c-4ae2-b445-425529f054b8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/main_Rise-Above-Silence.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/main_Rise-Above-Silence.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,30 +49,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Django Server.RiseAboveSilence.executor": "Run",
-    "Django tests.Test: tests.accounts.profile_views.test_profile_delete_view.ProfileDeleteViewTests.executor": "Run",
-    "Django tests.Test: tests.accounts.user_views.test_custom_user_register_view.CustomUserRegisterViewIntegrationTests.executor": "Run",
-    "Django tests.Test: tests.common.views.test_comment_view.CommentViewIntegrationTests.executor": "Run",
-    "Django tests.Test: tests.common.views.test_comment_view.CommentViewIntegrationTests.test_authenticated_user_can_submit_comment.executor": "Run",
-    "Django tests.Test: tests.common.views.test_comment_view.CommentViewIntegrationTests.test_get_request_returns_form_and_post.executor": "Run",
-    "Django tests.Test: tests.posts.views.test_add_post_view.AddPostViewIntegrationTests.executor": "Run",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/Documents/Rise-Above-Silence",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Django Server.RiseAboveSilence.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: tests.accounts.profile_views.test_profile_delete_view.ProfileDeleteViewTests.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: tests.accounts.user_views.test_custom_user_register_view.CustomUserRegisterViewIntegrationTests.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: tests.common.views.test_comment_view.CommentViewIntegrationTests.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: tests.common.views.test_comment_view.CommentViewIntegrationTests.test_authenticated_user_can_submit_comment.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: tests.common.views.test_comment_view.CommentViewIntegrationTests.test_get_request_returns_form_and_post.executor&quot;: &quot;Run&quot;,
+    &quot;Django tests.Test: tests.posts.views.test_add_post_view.AddPostViewIntegrationTests.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Documents/Rise-Above-Silence&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Documents\Rise-Above-Silence\docs" />
@@ -249,7 +250,8 @@
       <workItem from="1751229753109" duration="5580000" />
       <workItem from="1751790456600" duration="14444000" />
       <workItem from="1751906491023" duration="3826000" />
-      <workItem from="1754192202649" duration="7070000" />
+      <workItem from="1754192202649" duration="8268000" />
+      <workItem from="1754229968240" duration="974000" />
     </task>
     <servers />
   </component>
