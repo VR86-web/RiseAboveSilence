@@ -1,0 +1,43 @@
+.toast-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: white;
+    padding: 15px 20px;
+    margin-top: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    max-width: 300px;
+    animation: slideIn 0.3s ease-out;
+    font-size: 14px;
+}
+
+.toast-notification + .toast-notification {
+    margin-top: 10px;
+}
+
+.toast-notification .close-btn {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #ccc;
+}
+
+.toast-notification .close-btn:hover {
+    color: white;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
