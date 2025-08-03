@@ -31,7 +31,8 @@ SECRET_KEY = os.getenv("SECRET_KEY", config("SECRET_KEY"))
 DEBUG = os.getenv('DEBUG', config('DEBUG')) == 'True'
 GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY',config('GOOGLE_MAPS_API_KEY'))
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', config('ALLOWED_HOSTS')). split(',')
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS]
 
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', config('CSRF_TRUSTED_ORIGINS', [])). split(',')
 
