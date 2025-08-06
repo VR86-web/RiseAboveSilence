@@ -15,7 +15,10 @@ class PostAdmin(ModelAdmin):
     actions = ['approve_posts']
 
     def approve_posts(self, request, queryset):
-        updated = queryset.update(is_approved=True)
-        self.message_user(request, f"{updated} post(s) approved.")
+        count = 0
+        for post in queryset.filter(is_approved=False):
+            post.is_approved = True
+            post.save()  # triggers signals
+            count += 1
+        self.message_user(request, f"{count} post(s) approved.")
 
-    approve_posts.short_description = "Approve selected posts"
