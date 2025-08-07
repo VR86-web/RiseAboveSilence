@@ -1,10 +1,10 @@
-from django.contrib.auth import logout
+
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, UpdateView, DeleteView
 
-from RiseAboveSilence.accounts.forms import ProfileEditForm, ProfileDeleteForm
+from RiseAboveSilence.accounts.forms import ProfileEditForm
 from RiseAboveSilence.accounts.models import Profile
 
 
@@ -34,8 +34,8 @@ class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         profile = self.get_object()
         user = profile.user
         profile.delete()
-        user.delete()  # also logs the user out automatically
-        return redirect("index")  # home page
+        user.delete()
+        return redirect("index")
 
     def test_func(self):
         profile = self.get_object()
