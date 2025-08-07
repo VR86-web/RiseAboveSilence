@@ -1,0 +1,56 @@
+section.section-padding {
+    background-color: white;
+}
+
+.post-grid {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 10px;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-thumb img {
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+    width: 100%;
+}
+
+h2.post-title a {
+    color: #222;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+}
+
+h3.post-content {
+    color: #000;
+    font-weight: 400;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    font-family: Arial, sans-serif;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    margin-top: 0;
+    flex-grow: 1;
+    overflow: auto;
+}
+
+.post-date {
+    font-size: 0.8rem;
+    color: #777;
+    display: block;
+    font-family: Arial, sans-serif;
+    margin-top: auto;
+}
+
