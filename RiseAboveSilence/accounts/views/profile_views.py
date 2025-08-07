@@ -1,4 +1,6 @@
+from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, UpdateView, DeleteView
 
@@ -19,19 +21,22 @@ class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy("profile-details", kwargs={"pk": self.object.pk})
 
+    def test_func(self):
+        profile = self.get_object()
+        return self.request.user == profile.user
+
 
 class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Profile
     template_name = "accounts_templates/profile-delete-template.html"
-    success_url = reverse_lazy("index")
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        if self.request.method == "GET":
-            context["form"] = ProfileDeleteForm(instance=self.object)
-        return context
 
     def post(self, request, *args, **kwargs):
+        profile = self.get_object()
+        user = profile.user
+        profile.delete()
+        user.delete()  # also logs the user out automatically
+        return redirect("index")  # home page
 
-        return super().post(request, *args, **kwargs)
+    def test_func(self):
+        profile = self.get_object()
+        return self.request.user == profile.user

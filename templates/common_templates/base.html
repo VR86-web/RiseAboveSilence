@@ -83,16 +83,9 @@
                             <li class="nav-item"><a href="{% url 'add-post' %}" class="nav-link">Add Post</a></li>
 
                             {% if request.user.is_authenticated %}
-                                {% if request.user.profile %}
-                                    <li class="nav-item">
-                                        <a href="{% url 'profile-details' request.user.pk %}"
-                                           class="nav-link">Profile</a>
-                                    </li>
-                                {% else %}
-                                    <li class="nav-item">
-                                        <a href="{% url 'profile-create' %}" class="nav-link">Create Profile</a>
-                                    </li>
-                                {% endif %}
+                                <li class="nav-item">
+                                    <a href="{% url 'profile-details' request.user.pk %}" class="nav-link">Profile</a>
+                                </li>
                             {% endif %}
                         </ul>
                     </div>
@@ -104,10 +97,12 @@
                 {% if request.user.is_authenticated %}
                     {% if request.user.profile and request.user.profile.profile_picture %}
                         <img src="{{ request.user.profile.profile_picture.url }}" alt="Profile Picture"
-                             class="small-profile-pic rounded-circle" style="width:36px; height:36px; object-fit:cover;">
+                             class="small-profile-pic rounded-circle"
+                             style="width:36px; height:36px; object-fit:cover;">
                     {% else %}
                         <img src="{% static 'images/default-profile.png' %}" alt="Default Profile Picture"
-                             class="small-profile-pic rounded-circle" style="width:36px; height:36px; object-fit:cover;">
+                             class="small-profile-pic rounded-circle"
+                             style="width:36px; height:36px; object-fit:cover;">
                     {% endif %}
                 {% endif %}
             </div>
