@@ -14,7 +14,7 @@ class News(models.Model):
     content = models.TextField()
 
     image = CloudinaryField(
-        'profile_picture',
+        "profile_picture",
         blank=True,
         null=True,
     )
@@ -31,7 +31,7 @@ class Comment(models.Model):
     to_post = models.ForeignKey(
         to=Post,
         on_delete=models.CASCADE,
-        related_name='comments',
+        related_name="comments",
     )
 
     user = models.ForeignKey(
@@ -46,11 +46,7 @@ class Comment(models.Model):
     )
 
     parent = models.ForeignKey(
-        'self',
-        null=True,
-        blank=True,
-        on_delete=models.CASCADE,
-        related_name='replies'
+        "self", null=True, blank=True, on_delete=models.CASCADE, related_name="replies"
     )
 
     def __str__(self):

@@ -8,12 +8,14 @@ from RiseAboveSilence.accounts.models import Profile
 class ProfileBaseForm(forms.ModelForm):
     class Meta:
         model = Profile
-        exclude = ('user',)
+        exclude = ("user",)
 
         widgets = {
-            'profile_picture': forms.FileInput(attrs={'class': 'form-control'}),
-            'date_of_birth': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-            'country': CountrySelectWidget(attrs={'class': 'form-control'}),
+            "profile_picture": forms.FileInput(attrs={"class": "form-control"}),
+            "date_of_birth": forms.DateInput(
+                attrs={"type": "date", "class": "form-control"}
+            ),
+            "country": CountrySelectWidget(attrs={"class": "form-control"}),
         }
 
 
@@ -22,4 +24,4 @@ class ProfileEditForm(ProfileBaseForm):
 
 
 class ProfileDeleteForm(ProfileBaseForm, DisableFieldsMixin):
-    disabled_fields = ('__all__',)
+    disabled_fields = ("__all__",)

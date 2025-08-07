@@ -12,11 +12,11 @@ from RiseAboveSilence.posts.models import Post
 def notify_moderators_on_post_create(sender, instance, created, **kwargs):
     if created and not instance.is_approved:
         try:
-            group = Group.objects.get(name='Post Approvers')
-            emails = group.user_set.values_list('email', flat=True)
+            group = Group.objects.get(name="Post Approvers")
+            emails = group.user_set.values_list("email", flat=True)
             send_mail(
-                subject='A new post is awaiting approval',
-                message=f'Title: {instance.title}\nUser: {instance.user.username}',
+                subject="A new post is awaiting approval",
+                message=f"Title: {instance.title}\nUser: {instance.user.username}",
                 from_email=settings.COMPANY_EMAIL,
                 recipient_list=list(emails),
                 fail_silently=False,
@@ -41,12 +41,16 @@ def cache_approval_status(sender, instance, **kwargs):
 # 3. Notify user only if post was just approved
 @receiver(post_save, sender=Post)
 def notify_user_post_approved(sender, instance, created, **kwargs):
-    if not created and not getattr(instance, "_was_approved", True) and instance.is_approved:
+    if (
+        not created
+        and not getattr(instance, "_was_approved", True)
+        and instance.is_approved
+    ):
         print(f"✅ Post approved. Sending email to: {instance.user.email}")
 
         send_mail(
-            subject='Your post has been approved!',
-            message=f'Your post \"{instance.title}\" is now live on the site.',
+            subject="Your post has been approved!",
+            message=f'Your post "{instance.title}" is now live on the site.',
             from_email=settings.COMPANY_EMAIL,
             recipient_list=[instance.user.email],
             fail_silently=False,

@@ -20,30 +20,32 @@ from RiseAboveSilence.posts.models import Post
 
 class HomePage(ListView):
     model = News
-    template_name = 'common_templates/index.html'
+    template_name = "common_templates/index.html"
     paginate_by = 3
-    context_object_name = 'news_items'
+    context_object_name = "news_items"
 
 
 class AboutView(TemplateView):
-    template_name = 'common_templates/about.html'
+    template_name = "common_templates/about.html"
 
 
 def comment_view(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.to_post = post
             comment.user = request.user
             comment.save()
-            return redirect('details-post', pk=pk)
+            return redirect("details-post", pk=pk)
     else:
         form = CommentForm()
 
-    return render(request, 'posts_templates/all-post.html', {'post': post, 'form': form})
+    return render(
+        request, "posts_templates/all-post.html", {"post": post, "form": form}
+    )
 
 
 logger = logging.getLogger(__name__)
@@ -53,7 +55,7 @@ logger = logging.getLogger(__name__)
 @login_required
 def async_new_comments(request):
     user = request.user
-    since_str = request.GET.get('since')
+    since_str = request.GET.get("since")
 
     try:
         since = datetime.datetime.fromisoformat(since_str)
@@ -63,38 +65,45 @@ def async_new_comments(request):
         logger.warning("Invalid 'since' parameter: %s", since_str)
         since = now() - datetime.timedelta(minutes=5)
 
-    post_comments = Comment.objects.filter(
-        to_post__user=user,
-        created_at__gt=since,
-        parent__isnull=True
-    ).exclude(user=user).select_related('user', 'to_post')
+    post_comments = (
+        Comment.objects.filter(
+            to_post__user=user, created_at__gt=since, parent__isnull=True
+        )
+        .exclude(user=user)
+        .select_related("user", "to_post")
+    )
 
-    reply_comments = Comment.objects.filter(
-        parent__user=user,
-        created_at__gt=since
-    ).exclude(user=user).select_related('user', 'to_post', 'parent')
+    reply_comments = (
+        Comment.objects.filter(parent__user=user, created_at__gt=since)
+        .exclude(user=user)
+        .select_related("user", "to_post", "parent")
+    )
 
     comments = sorted(
         list(post_comments) + list(reply_comments),
         key=lambda c: c.created_at,
-        reverse=True
+        reverse=True,
     )
 
     data = []
     for comment in comments:
-        data.append({
-            "id": comment.id,
-            "type": "reply" if comment.parent else "post_comment",
-            "content": comment.content[:80],
-            "author": comment.user.username,
-            "post_id": comment.to_post.id,
-            "post_title": comment.to_post.title[:80],
-        })
+        data.append(
+            {
+                "id": comment.id,
+                "type": "reply" if comment.parent else "post_comment",
+                "content": comment.content[:80],
+                "author": comment.user.username,
+                "post_id": comment.to_post.id,
+                "post_title": comment.to_post.title[:80],
+            }
+        )
 
-    return JsonResponse({
-        "new_count": len(data),
-        "notifications": data,
-    })
+    return JsonResponse(
+        {
+            "new_count": len(data),
+            "notifications": data,
+        }
+    )
 
 
 @login_required
@@ -102,19 +111,16 @@ def reply_to_comment(request, pk, comment_id):
     post = get_object_or_404(Post, pk=pk)
     parent_comment = get_object_or_404(Comment, pk=comment_id)
 
-    if request.method == 'POST':
-        content = request.POST.get('content')
+    if request.method == "POST":
+        content = request.POST.get("content")
 
         if content:
             Comment.objects.create(
-                to_post=post,
-                user=request.user,
-                content=content,
-                parent=parent_comment
+                to_post=post, user=request.user, content=content, parent=parent_comment
             )
-        return redirect('details-post', pk=post.pk)
+        return redirect("details-post", pk=post.pk)
 
-    return redirect('details-post', pk=post.pk)
+    return redirect("details-post", pk=post.pk)
 
 
 class ToggleLikeAPIView(APIView):
@@ -133,5 +139,6 @@ class ToggleLikeAPIView(APIView):
             liked = True
 
         like_count = Like.objects.filter(to_post=post).count()
-        return Response({'liked': liked, 'like_count': like_count}, status=status.HTTP_200_OK)
-
+        return Response(
+            {"liked": liked, "like_count": like_count}, status=status.HTTP_200_OK
+        )

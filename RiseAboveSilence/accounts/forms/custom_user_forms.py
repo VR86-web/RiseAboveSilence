@@ -6,7 +6,10 @@ from RiseAboveSilence.accounts.models import CustomUser
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('email', 'username',)
+        fields = (
+            "email",
+            "username",
+        )
 
 
 class CustomUserChangeForm(UserChangeForm):

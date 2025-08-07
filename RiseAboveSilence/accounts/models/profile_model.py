@@ -30,20 +30,17 @@ class Profile(models.Model):
     )
 
     country = CountryField(
-        max_length=3,
-        blank=True,
-        null=True,
-        blank_label="Select a country"
+        max_length=3, blank=True, null=True, blank_label="Select a country"
     )
 
     profile_picture = CloudinaryField(
-        'profile_picture',
+        "profile_picture",
         blank=True,
         null=True,
     )
 
     def get_full_name(self):
         if self.first_name and self.last_name:
-            return f'{self.first_name} {self.last_name}'
+            return f"{self.first_name} {self.last_name}"
 
         return self.first_name or self.last_name or "Anonymous"

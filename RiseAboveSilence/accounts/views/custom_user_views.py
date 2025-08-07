@@ -8,14 +8,14 @@ UserModel = get_user_model()
 
 
 class CustomUserLoginView(LoginView):
-    template_name = 'accounts_templates/login.html'
+    template_name = "accounts_templates/login.html"
 
 
 class CustomUserRegisterView(CreateView):
     model = UserModel
-    template_name = 'accounts_templates/registration-template.html'
+    template_name = "accounts_templates/registration-template.html"
     form_class = CustomUserCreationForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy("index")
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -23,6 +23,3 @@ class CustomUserRegisterView(CreateView):
         login(self.request, self.object)
 
         return response
-
-
-

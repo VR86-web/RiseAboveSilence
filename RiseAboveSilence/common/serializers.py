@@ -10,7 +10,14 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['id', 'content', 'user_id', 'user_full_name', 'profile_picture', 'created_at']
+        fields = [
+            "id",
+            "content",
+            "user_id",
+            "user_full_name",
+            "profile_picture",
+            "created_at",
+        ]
 
     def get_user_full_name(self, obj):
         return obj.user.profile.get_full_name()
