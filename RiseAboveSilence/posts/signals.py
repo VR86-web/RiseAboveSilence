@@ -8,9 +8,6 @@ from django.template.loader import render_to_string
 from RiseAboveSilence import settings
 from RiseAboveSilence.posts.models import Post
 
-
-# 1. Notify moderators when a new post is created (and not yet approved)
-
 UserModel = get_user_model()
 
 
@@ -26,13 +23,20 @@ def notify_moderators_on_post_create(sender, instance, created, **kwargs):
                 # Safely get username or fallback to email
                 username = getattr(instance.user, "username", None) or instance.user.email
 
-                plain_message = f"Title: {instance.title}\nUser: {username}"
+                # Plain text version
+                plain_message = (
+                    f"{username} has created a new post titled \"{instance.title}\" "
+                    f"and it is awaiting your approval."
+                )
 
-                # Simple HTML version
+                # HTML version using your template
                 html_message = render_to_string('email/email.html', {
                     'subject': subject,
-                    'recipient_name': username,
-                    'message_body': f'Title: {instance.title}\nUser: {username}',
+                    'recipient_name': "Moderator",
+                    'message_body': (
+                        f"{username} has created a post titled \"{instance.title}\" "
+                        f"and it is awaiting your approval."
+                    ),
                 })
 
                 email = EmailMultiAlternatives(subject, plain_message, settings.COMPANY_EMAIL, emails)
