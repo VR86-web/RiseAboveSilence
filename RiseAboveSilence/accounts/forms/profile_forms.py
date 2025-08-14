@@ -23,5 +23,5 @@ class ProfileEditForm(ProfileBaseForm):
     pass
 
 
-class ProfileDeleteForm(ProfileBaseForm, DisableFieldsMixin):
-    disabled_fields = ("__all__",)
+class ProfileDeleteForm( ProfileBaseForm):
+    pass
